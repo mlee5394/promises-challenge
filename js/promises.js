@@ -11,7 +11,40 @@ $(document).ready(function() {
     - Use http://openweathermap.org/current
     - The API is really straightforward, but you'll have to pass an additional parameter to getJSON in order to get it working!
       - Take a look at jQuery's getJSON() API to see what that extra parameter is! http://api.jquery.com/jquery.getjson/
-  
+
+*/
+  var zip;
+    var country;
+  $.getJSON('http://www.ip-api.com/json/').then(function(data) {
+      zip = data.zip;
+      country = data.countryCode.toLowerCase();
+      $('#fetch-weather').click(function() {
+          var clouds;
+          var description;
+          var icon;
+          var current;
+
+          $.getJSON('http://api.openweathermap.org/data/2.5/weather?zip=' + zip + "," + country, 'appId=bd82977b86bf27fb59a04b61b657fb6f').then(function(data) {
+              clouds = data.weather.main;
+              description = data.weather.description;
+              icon = icon.weather.icon;
+              current = '<p>' + main + '</p>' +
+                  '<p>' + description + '</p>' +
+                  '<p>' + icon + '</p>';
+
+
+              $('#weather-results').text(current);
+          });
+
+  });
+
+
+
+  });
+
+
+
+/*
   Part 2: Show the difference between parallel and serial promises
 
   - Below I've implemented a couple of promises that just use timeouts, and return numbers
